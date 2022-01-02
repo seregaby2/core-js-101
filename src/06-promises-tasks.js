@@ -1,3 +1,4 @@
+/* eslint-disable no-loop-func */
 /* ************************************************************************************************
  *                                                                                                *
  * Please read the following tutorial before implementing tasks:                                   *
@@ -28,8 +29,12 @@
  *      .catch((error) => console.log(error.message)) // 'Error: Wrong parameter is passed!
  *                                                    //  Ask her again.';
  */
-function willYouMarryMe(/* isPositiveAnswer */) {
-  throw new Error('Not implemented');
+function willYouMarryMe(isPositiveAnswer) {
+  return new Promise((resolve, reject) => {
+    if (!isPositiveAnswer && typeof (isPositiveAnswer) === 'boolean')resolve('Oh no, she said "No".');
+    if (isPositiveAnswer && typeof (isPositiveAnswer) === 'boolean') resolve('Hooray!!! She said "Yes"!');
+    else { reject(new Error('Wrong parameter is passed! Ask her again.')); }
+  });
 }
 
 
@@ -48,8 +53,8 @@ function willYouMarryMe(/* isPositiveAnswer */) {
  *    })
  *
  */
-function processAllPromises(/* array */) {
-  throw new Error('Not implemented');
+function processAllPromises(array) {
+  return Promise.all(array.reduce((a, b) => a.concat(b), []));
 }
 
 /**
@@ -71,8 +76,8 @@ function processAllPromises(/* array */) {
  *    })
  *
  */
-function getFastestPromise(/* array */) {
-  throw new Error('Not implemented');
+function getFastestPromise(array) {
+  return Promise.race(array);
 }
 
 /**
@@ -92,8 +97,16 @@ function getFastestPromise(/* array */) {
  *    });
  *
  */
-function chainPromises(/* array, action */) {
-  throw new Error('Not implemented');
+function chainPromises(array, action) {
+  try {
+    return new Promise((resolve) => {
+      const answersArray = [];
+      array.forEach((e) => e.then((answerProm) => answersArray.push(answerProm)));
+      resolve(answersArray);
+    }).then((answersArray) => answersArray.reduce(action));
+  } catch (e) {
+    throw Error;
+  }
 }
 
 module.exports = {

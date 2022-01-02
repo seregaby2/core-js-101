@@ -36,8 +36,12 @@ function findElement(arr, value) {
  *    2 => [ 1, 3 ]
  *    5 => [ 1, 3, 5, 7, 9 ]
  */
-function generateOdds(/* len */) {
-  throw new Error('Not implemented');
+function generateOdds(len) {
+  const arr = [...Array(len)];
+  const newArr = [];
+  arr.fill(1)
+    .reduce((prev, curr, i) => newArr[i] = prev + 2, -1);
+  return newArr;
 }
 
 
@@ -271,8 +275,12 @@ function getSecondItems(arr) {
  *  [ 'a', 'b', 'c', null ] => [ 'a', 'b','b', 'c','c','c',  null,null,null,null ]
  *  [ 1,2,3,4,5 ] => [ 1, 2,2, 3,3,3, 4,4,4,4, 5,5,5,5,5 ]
  */
-function propagateItemsByPositionIndex(/* arr */) {
-  throw new Error('Not implemented');
+function propagateItemsByPositionIndex(arr) {
+  if (arr.length === 0 || arr.length === 1) return arr;
+  return arr.reduce((acc, v, i) => {
+    acc.push(...Array(i + 1).fill(v));
+    return acc;
+  }, []);
 }
 
 
@@ -467,8 +475,9 @@ function sortCitiesArray(arr) {
  *           [0,0,0,1,0],
  *           [0,0,0,0,1]]
  */
-function getIdentityMatrix(/* n */) {
-  throw new Error('Not implemented');
+function getIdentityMatrix(n) {
+  return Array(n).fill(0).map((elem, i) => Array(n).fill(0)
+    .map((elem2, j) => 1 - Math.min(Math.abs(i - j), 1)));
 }
 
 /**
